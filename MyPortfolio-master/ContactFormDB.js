@@ -1,3 +1,5 @@
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.5.2/firebase-app.js";
+
 const firebaseConfig = {
   apiKey: "AIzaSyDAJK0skFTg_YDWhzWcfhx3samTjX5aodk",
   authDomain: "contactform-b02af.firebaseapp.com",
@@ -8,7 +10,7 @@ const firebaseConfig = {
   messagingSenderId: "830147653529",
   appId: "1:830147653529:web:531623acd69a47c5226d08",
 };
-firebase.initializeApp(firebaseConfig);
+const app = initializeApp(firebaseConfig);
 
 // reference your database
 var contactFormDB = firebase.database().ref("contactform");

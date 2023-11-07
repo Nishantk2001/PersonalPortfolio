@@ -282,10 +282,57 @@
    <a href="https://www.linkedin.com/in/nishant-kumar-3104a2259"><i class="fab fa-linkedin"></i></a>
     <a href="https://github.com/Nishantk2001"><i class="fab fa-github"></i></a>
     </div>
-    <script type="module" src="https://www.gstatic.com/firebasejs/10.5.2/firebase-database.js"></script>
-    <script  src="ContactFormDB.js"></script>
+
+    <!-- <script  src="https://www.gstatic.com/firebasejs/10.5.2/firebase.js"></script>
+    <script type="module" src="ContactFormDB.js"></script> -->
     
     <script src="script.js"></script>
+
+    <!-- Supabase Connectivity -->
+
+    <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+
+    <script>
+        const { createClient } = supabase
+        supabase = createClient("https://qslbahvfnocpykbesfss.supabase.co", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFzbGJhaHZmbm9jcHlrYmVzZnNzIiwicm9sZSI6ImFub24iLCJpYXQiOjE2OTkzNTU1MTQsImV4cCI6MjAxNDkzMTUxNH0.WU2IRh6HC77u-ZLIl8Y4t1nYcGJrjhBQhrgjnfbFt1I")
+        
+        const form = document.querySelector('#contactForm')
+        form.addEventListener('submit', async (event) => {
+            event.preventDefault()
+  
+            const formInputs = form.querySelectorAll('input, textarea')
+  
+            let submision = {}
+  
+            formInputs.forEach(element => {
+              const { value, id } = element
+              if (value) {
+                  submision[id] = value
+              }
+            })
+            console.log(submision)
+  
+            const { error } = await supabase.from('entries').insert([submision], {returning: 'minimal'})
+  
+          
+            document.querySelector('.alert').style.display = 'block';
+
+            // Hide alert after 3 seconds
+            setTimeout(function(){
+                document.querySelector('.alert').style.display = 'none';
+            },2000);
+
+
+            // if (error) {
+            //     alert('There was an error please try again')
+            // } else {
+            //     alert('Thanks for contacting us')
+            // }
+  
+            formInputs.forEach(element => element.value = '')
+  
+        })
+    </script>
 
 </body>
 </html>
